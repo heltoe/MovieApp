@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/moviesFragment">
+
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="study.heltoe.movieapp.fragments.MoviesFragment"
+        android:label="fragment_movies"
+        tools:layout="@layout/fragment_movies" >
+        <action
+            android:id="@+id/action_moviesFragment_to_oneMovieFragment"
+            app:destination="@id/oneMovieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/oneMovieFragment"
+        android:name="study.heltoe.movieapp.fragments.OneMovieFragment"
+        android:label="fragment_one_movie"
+        tools:layout="@layout/fragment_one_movie" >
+        <action
+            android:id="@+id/action_oneMovieFragment_to_moviesFragment"
+            app:destination="@id/moviesFragment" />
+        <action
+            android:id="@+id/action_oneMovieFragment_to_actorFragment"
+            app:destination="@id/actorFragment" />
+        <action
+            android:id="@+id/action_oneMovieFragment_to_vishListFragment"
+            app:destination="@id/vishListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/actorFragment"
+        android:name="study.heltoe.movieapp.fragments.ActorFragment"
+        android:label="fragment_actor"
+        tools:layout="@layout/fragment_actor" >
+        <action
+            android:id="@+id/action_actorFragment_to_oneMovieFragment"
+            app:destination="@id/oneMovieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vishListFragment"
+        android:name="study.heltoe.movieapp.fragments.VishListFragment"
+        android:label="fragment_vish_list"
+        tools:layout="@layout/fragment_vish_list" >
+        <action
+            android:id="@+id/action_vishListFragment_to_oneMovieFragment"
+            app:destination="@id/oneMovieFragment" />
+    </fragment>
+</navigation>
