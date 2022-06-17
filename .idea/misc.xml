@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/java/MovieApp/app/src/main/res/drawable/ic_film.xml" value="0.1265" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_actor.xml" value="0.25416666666666665" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_auth.xml" value="0.25416666666666665" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_movies.xml" value="0.24010416666666667" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_one_movie.xml" value="0.24010416666666667" />

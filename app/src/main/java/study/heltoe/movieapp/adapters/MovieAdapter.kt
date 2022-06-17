@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import study.heltoe.movieapp.databinding.FragmentOneMovieBinding
 import study.heltoe.movieapp.databinding.MovieItemBinding
-import study.heltoe.movieapp.models.Movie
+import study.heltoe.movieapp.models.movieList.Movie
 
-class MovieRecyclerViewAdapter: RecyclerView.Adapter<MovieRecyclerViewAdapter.MovieView>() {
+class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieView>() {
     inner class MovieView(val binding: MovieItemBinding): RecyclerView.ViewHolder(binding.root)
 
     val diffCallBack = object : DiffUtil.ItemCallback<Movie>() {
@@ -27,6 +26,7 @@ class MovieRecyclerViewAdapter: RecyclerView.Adapter<MovieRecyclerViewAdapter.Mo
     var differ = AsyncListDiffer(this, diffCallBack)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieView {
+
         return MovieView(
             MovieItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -40,10 +40,20 @@ class MovieRecyclerViewAdapter: RecyclerView.Adapter<MovieRecyclerViewAdapter.Mo
             movie.poster.previewUrl?.let {
                 Glide.with(this).load(movie.poster.url).into(holder.binding.cardImage)
             }
-            movie.name?.let {
-                holder.binding.cardText.text = movie.name
+            val name = movie.name ?: movie.alternativeName
+            name?.let {
+                holder.binding.cardText.text = name
+            }
+            setOnClickListener {
+                onItemClickListener?.let { it(movie) }
             }
         }
+    }
+
+    private var onItemClickListener: ((Movie) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Movie) -> Unit) {
+        onItemClickListener = listener
     }
 
     override fun getItemCount(): Int {

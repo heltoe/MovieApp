@@ -4,38 +4,28 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import study.heltoe.movieapp.utils.Constants.BASE_URL
 
-object RetrofitClient {
-    private var retrofit: Retrofit? = null
-
-    fun getClient(baseUrl: String): Retrofit {
-        if (retrofit == null) {
+class RetrofitClient {
+    companion object {
+        private val retrofit by lazy {
             // add log to logcat
-            val httpLoggingInterceptor = HttpLoggingInterceptor()
-            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-            val okHttpClient = OkHttpClient
-                .Builder()
-                .addInterceptor {
-                    val request =
-                        it
-                            .request()
-                            .newBuilder()
-                            .addHeader("Accept", "application/json")
-                            .addHeader("Content-Type", "application/json")
-                            .build()
-                    return@addInterceptor it.proceed(request)
-                }
-                .addInterceptor(httpLoggingInterceptor)
+            val logging = HttpLoggingInterceptor()
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+            val client = OkHttpClient.Builder()
+                .addInterceptor(logging)
                 .build()
 
             // retrofit instance
-            retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
+            Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
                 .build()
         }
-        return retrofit!!
+
+        val api by lazy {
+            retrofit.create(MovieApi::class.java)
+        }
     }
 }

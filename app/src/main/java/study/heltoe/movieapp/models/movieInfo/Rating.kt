@@ -1,6 +1,6 @@
-package study.heltoe.movieapp.models
+package study.heltoe.movieapp.models.movieInfo
 
-data class Votes(
+data class Rating(
     val _id: String,
     val await: Int? = null,
     val filmCritics: Int? = null,

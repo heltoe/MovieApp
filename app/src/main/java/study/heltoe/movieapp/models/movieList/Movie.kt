@@ -1,4 +1,4 @@
-package study.heltoe.movieapp.models
+package study.heltoe.movieapp.models.movieList
 
 data class Movie(
     val alternativeName: String? = null,

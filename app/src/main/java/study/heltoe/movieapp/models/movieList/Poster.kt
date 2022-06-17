@@ -1,4 +1,4 @@
-package study.heltoe.movieapp.models
+package study.heltoe.movieapp.models.movieList
 
 data class Poster(
     val _id: String,
