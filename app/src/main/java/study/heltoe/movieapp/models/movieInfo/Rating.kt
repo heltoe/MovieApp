@@ -2,9 +2,9 @@ package study.heltoe.movieapp.models.movieInfo
 
 data class Rating(
     val _id: String,
-    val await: Int? = null,
-    val filmCritics: Int? = null,
-    val imdb: Int? = null,
-    val kp: Int? = null,
-    val russianFilmCritics: Int? = null
+    val await: Any? = null,
+    val filmCritics: Any? = null,
+    val imdb: Any? = null,
+    val kp: Any? = null,
+    val russianFilmCritics: Any? = null
 )

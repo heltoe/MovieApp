@@ -1,7 +1,7 @@
 package study.heltoe.movieapp.models.movieInfo
 
 data class MovieInfo(
-    val ageRating: Any? = null,
+    val ageRating: Int? = null,
     val alternativeName: String? = null,
     val backdrop: Backdrop,
     val budget: Budget,
@@ -14,7 +14,7 @@ data class MovieInfo(
     val externalId: ExternalId,
     val facts: List<Any>,
     val fees: Fees,
-    val genres: List<Any>,
+    val genres: List<Genre>,
     val id: Int,
     val imagesInfo: ImagesInfo,
     val lists: List<Any>,

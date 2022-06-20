@@ -6,4 +6,7 @@
     <string name="menu_item_vish_list">Избранное</string>
     <string name="empty_placeholder">Список фильмов пуст</string>
     <string name="default_state_movie_info">Нет данных</string>
+    <string name="movie_info_rating">Рейтинг:</string>
+    <string name="movie_info_name">Название:</string>
+    <string name="movie_info_description">Описание:</string>
 </resources>

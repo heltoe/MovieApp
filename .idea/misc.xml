@@ -3,7 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/java/MovieApp/app/src/main/res/drawable/background_opacity_btn.xml" value="0.1835" />
+        <entry key="..\:/java/MovieApp/app/src/main/res/drawable/grey_overlay.xml" value="0.1835" />
         <entry key="..\:/java/MovieApp/app/src/main/res/drawable/ic_film.xml" value="0.1265" />
+        <entry key="..\:/java/MovieApp/app/src/main/res/drawable/ic_heart.xml" value="0.1845" />
+        <entry key="..\:/java/MovieApp/app/src/main/res/drawable/ic_star.xml" value="0.1845" />
+        <entry key="..\:/java/MovieApp/app/src/main/res/drawable/ic_star_passive.xml" value="0.1845" />
+        <entry key="..\:/java/MovieApp/app/src/main/res/drawable/ic_star_solid.xml" value="0.1845" />
+        <entry key="..\:/java/MovieApp/app/src/main/res/drawable/left.xml" value="0.1845" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_actor.xml" value="0.25416666666666665" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_auth.xml" value="0.25416666666666665" />
