@@ -20,6 +20,7 @@ class OneMovieFragment : Fragment() {
     private var _binding: FragmentOneMovieBinding? = null
     private val mBinding get() = _binding!!
     lateinit var viewModel: MoviesViewModel
+    private var isFavorite = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -97,6 +98,14 @@ class OneMovieFragment : Fragment() {
         })
         mBinding.backBtn.setOnClickListener {
             findNavController().navigate(R.id.action_oneMovieFragment_to_moviesFragment)
+        }
+        mBinding.makeFavoriteBtn.setOnClickListener {
+            isFavorite = !isFavorite
+            if (isFavorite) {
+                mBinding.makeFavoriteBtn.setImageResource(R.drawable.ic_star_active)
+            } else {
+                mBinding.makeFavoriteBtn.setImageResource(R.drawable.ic_star_passive)
+            }
         }
     }
 

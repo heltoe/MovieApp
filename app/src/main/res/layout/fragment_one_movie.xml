@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_motion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_blue_opacity_08"
+    app:layoutDescription="@xml/fragment_one_movie_scene"
     tools:context=".fragments.OneMovieFragment">
 
     <ProgressBar
@@ -30,156 +33,137 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ScrollView
+    <!--  image with overlay  -->
+    <ImageView
+        android:id="@+id/card_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/dark_blue"
-        android:paddingBottom="@dimen/base_margin_or_padding"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="550dp"
+        android:contentDescription="image_view"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="@id/container"
+        app:layout_constraintStart_toStartOf="@id/container"
+        app:layout_constraintTop_toTopOf="@id/container"
+        tools:src="@mipmap/ic_launcher" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container"
+    <View
+        android:id="@+id/card_image_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:background="@drawable/grey_overlay"
+        app:layout_constraintBottom_toBottomOf="@id/card_image"
+        app:layout_constraintEnd_toEndOf="@id/card_image"
+        app:layout_constraintStart_toStartOf="@id/card_image"
+        app:layout_constraintTop_toTopOf="@id/card_image" />
+    <!--    -->
+    <ImageButton
+        android:id="@+id/backBtn"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:background="@drawable/background_opacity_btn"
+        android:src="@drawable/left"
+        app:layout_constraintStart_toStartOf="@id/container"
+        app:layout_constraintTop_toTopOf="@id/container" />
+
+    <ImageButton
+        android:id="@+id/makeFavoriteBtn"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:background="@drawable/background_opacity_btn"
+        android:src="@drawable/ic_star_passive"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/containerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/base_margin_or_padding"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/base_margin_or_padding"
+        android:paddingEnd="80dp"
+        app:layout_constraintBottom_toTopOf="@+id/containerRating"
+        app:layout_constraintStart_toStartOf="@id/container">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_info_name"
+            android:textColor="@color/base_text_description"
+            android:textSize="@dimen/small_text_size" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_or_padding"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/small_text_size"
+            tools:text="Бла бла" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/containerRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/base_margin_or_padding"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/base_margin_or_padding"
+        android:paddingEnd="80dp"
+        app:layout_constraintBottom_toTopOf="@+id/card_year_duration"
+        app:layout_constraintStart_toStartOf="@id/container">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_info_rating"
+            android:textColor="@color/base_text_description"
+            android:textSize="@dimen/small_text_size" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_or_padding"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/small_text_size"
+            tools:text="0.0" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/base_margin_or_padding"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/base_margin_or_padding"
+        android:paddingEnd="@dimen/base_margin_or_padding"
+        app:layout_constraintBottom_toBottomOf="@+id/card_image"
+        app:layout_constraintStart_toStartOf="@id/container">
+
+        <TextView
+            android:id="@+id/card_year_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="@dimen/base_margin_or_padding"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/small_text_size"
+            tools:text="Year" />
 
-            <ImageView
-                android:id="@+id/card_image"
-                android:layout_width="match_parent"
-                android:layout_height="550dp"
-                android:contentDescription="image_view"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="@id/container"
-                app:layout_constraintStart_toStartOf="@id/container"
-                app:layout_constraintTop_toTopOf="@id/container"
-                tools:src="@mipmap/ic_launcher" />
+        <TextView
+            android:id="@+id/card_short_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/base_margin_or_padding"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/small_text_size"
+            tools:text="Short Description" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="550dp"
-                android:background="@drawable/grey_overlay"
-                app:layout_constraintBottom_toBottomOf="@id/card_image"
-                app:layout_constraintEnd_toEndOf="@id/card_image"
-                app:layout_constraintStart_toStartOf="@id/card_image"
-                app:layout_constraintTop_toTopOf="@id/card_image" />
+        <TextView
+            android:id="@+id/card_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/base_text_color"
+            tools:text="Description" />
+    </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/backBtn"
-                android:layout_width="60dp"
-                android:layout_height="80dp"
-                android:background="@drawable/background_opacity_btn"
-                android:src="@drawable/left"
-                app:layout_constraintStart_toStartOf="@id/container"
-                app:layout_constraintTop_toTopOf="@id/container" />
-
-            <ImageButton
-                android:id="@+id/makeFavoriteBtn"
-                android:layout_width="60dp"
-                android:layout_height="80dp"
-                android:background="@drawable/background_opacity_btn"
-                android:src="@drawable/ic_star_passive"
-                app:layout_constraintEnd_toEndOf="@id/container"
-                app:layout_constraintTop_toTopOf="@id/container" />
-
-            <LinearLayout
-                android:id="@+id/containerName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/base_margin_or_padding"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/base_margin_or_padding"
-                android:paddingEnd="80dp"
-                app:layout_constraintBottom_toTopOf="@+id/containerRating"
-                app:layout_constraintStart_toStartOf="@id/container">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/movie_info_name"
-                    android:textColor="@color/base_text_description"
-                    android:textSize="@dimen/small_text_size" />
-
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/base_margin_or_padding"
-                    android:textColor="@color/base_text_color"
-                    android:textSize="@dimen/small_text_size"
-                    tools:text="Бла бла" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/containerRating"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/base_margin_or_padding"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/base_margin_or_padding"
-                android:paddingEnd="80dp"
-                app:layout_constraintBottom_toTopOf="@+id/card_year_duration"
-                app:layout_constraintStart_toStartOf="@id/container">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/movie_info_rating"
-                    android:textColor="@color/base_text_description"
-                    android:textSize="@dimen/small_text_size" />
-
-                <TextView
-                    android:id="@+id/rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/base_margin_or_padding"
-                    android:textColor="@color/base_text_color"
-                    android:textSize="@dimen/small_text_size"
-                    tools:text="0.0" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/card_year_duration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/base_margin_or_padding"
-                android:layout_marginBottom="@dimen/base_margin_or_padding"
-                android:textColor="@color/base_text_color"
-                android:textSize="@dimen/small_text_size"
-                app:layout_constraintBottom_toTopOf="@id/card_short_description"
-                app:layout_constraintStart_toStartOf="@id/container"
-                tools:text="Year" />
-
-            <TextView
-                android:id="@+id/card_short_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/base_margin_or_padding"
-                android:layout_marginBottom="@dimen/base_margin_or_padding"
-                android:textColor="@color/base_text_color"
-                android:textSize="@dimen/small_text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/card_image"
-                app:layout_constraintStart_toStartOf="@id/container"
-                tools:text="Short Description" />
-
-            <TextView
-                android:id="@+id/card_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/base_margin_or_padding"
-                android:layout_marginTop="@dimen/base_margin_or_padding"
-                android:layout_marginEnd="@dimen/base_margin_or_padding"
-                android:textColor="@color/base_text_color"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@id/container"
-                app:layout_constraintStart_toStartOf="@id/container"
-                app:layout_constraintTop_toBottomOf="@id/card_image"
-                tools:text="Description" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

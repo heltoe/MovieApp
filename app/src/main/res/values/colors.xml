@@ -15,4 +15,5 @@
     <color name="dark_blue_opacity_08">#1E2541</color>
     <color name="base_text_description">#6A7AA7</color>
     <color name="base_text_color">#BDC4DF</color>
+    <color name="yellow">#FFD700</color>
 </resources>
