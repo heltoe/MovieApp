@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import study.heltoe.movieapp.MovieApplication
 import study.heltoe.movieapp.models.movieInfo.MovieInfo
+import study.heltoe.movieapp.models.movieInfo.Person
 import study.heltoe.movieapp.models.movieList.MovieListResponse
 import study.heltoe.movieapp.repository.MovieRepository
 import study.heltoe.movieapp.utils.StateData
@@ -29,6 +30,9 @@ class MoviesViewModel(
     //
     var movieId: Int? = null
     val movieInfo: MutableLiveData<StateData<MovieInfo>> = MutableLiveData()
+    //
+    var actorId: Int? = null
+    val actorInfo: MutableLiveData<StateData<Person>> = MutableLiveData()
 
     init {
         getListMovies()
@@ -41,6 +45,12 @@ class MoviesViewModel(
     fun getMovieInfo() = viewModelScope.launch {
         if (movieId != null) {
             fetchMovieInfo()
+        }
+    }
+
+    fun getActorInfo() = viewModelScope.launch {
+        if (actorId != null) {
+
         }
     }
 
@@ -108,6 +118,10 @@ class MoviesViewModel(
 
     fun clearMovieInfo() {
         movieInfo.postValue(null)
+    }
+
+    fun clearActorInfo() {
+        actorInfo.postValue(null)
     }
 
     private fun hasInternetConnection(): Boolean {

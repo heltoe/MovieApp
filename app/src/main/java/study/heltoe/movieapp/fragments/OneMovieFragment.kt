@@ -9,9 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import study.heltoe.movieapp.MainActivity
 import study.heltoe.movieapp.R
+import study.heltoe.movieapp.adapters.ActorAdapter
 import study.heltoe.movieapp.databinding.FragmentOneMovieBinding
 import study.heltoe.movieapp.utils.StateData
 import study.heltoe.movieapp.viewmodels.MoviesViewModel
@@ -21,6 +24,7 @@ class OneMovieFragment : Fragment() {
     private val mBinding get() = _binding!!
     lateinit var viewModel: MoviesViewModel
     private var isFavorite = false
+    lateinit var actorAdapter: ActorAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +36,10 @@ class OneMovieFragment : Fragment() {
     }
     override fun onStart() {
         super.onStart()
+        initRecycler()
+        actorAdapter.setOnItemClickListener {
+            findNavController().navigate(R.id.action_oneMovieFragment_to_actorFragment)
+        }
         viewModel = (activity as MainActivity).viewModel
 
         viewModel.getMovieInfo()
@@ -106,6 +114,14 @@ class OneMovieFragment : Fragment() {
             } else {
                 mBinding.makeFavoriteBtn.setImageResource(R.drawable.ic_star_passive)
             }
+        }
+    }
+
+    private fun initRecycler() {
+        actorAdapter = ActorAdapter()
+        mBinding.actorRecyclerView.apply {
+            adapter = actorAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 

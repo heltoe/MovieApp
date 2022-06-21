@@ -12,7 +12,7 @@ import study.heltoe.movieapp.models.movieList.Movie
 class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieView>() {
     inner class MovieView(val binding: MovieItemBinding): RecyclerView.ViewHolder(binding.root)
 
-    val diffCallBack = object : DiffUtil.ItemCallback<Movie>() {
+    private val diffCallBack = object : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.id == newItem.id
         }

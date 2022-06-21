@@ -22,28 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-//
-        initNavigation()
         initViewModel()
-    }
-
-    private fun initNavigation() {
-        val navigation = mBinding.navigation
-        navigation.setOnItemSelectedListener(object : NavigationBarView.OnItemSelectedListener {
-            override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                when (item.itemId) {
-                    R.id.movies_list -> {
-                        loadFragment(MoviesFragment())
-                        return true
-                    }
-                    R.id.vish_list -> {
-                        loadFragment(VishListFragment())
-                        return true
-                    }
-                }
-                return false
-            }
-        })
     }
 
     private fun initViewModel() {
@@ -51,13 +30,6 @@ class MainActivity : AppCompatActivity() {
         val viewModelProviderFactory = MovieViewModelProviderFactory(application, movieRepository)
         viewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(MoviesViewModel::class.java)
-    }
-
-    private fun loadFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager.beginTransaction()
-        fragmentManager.replace(R.id.fragmentConstraint, fragment)
-        fragmentManager.addToBackStack(null)
-        fragmentManager.commit()
     }
 
     override fun onDestroy() {
