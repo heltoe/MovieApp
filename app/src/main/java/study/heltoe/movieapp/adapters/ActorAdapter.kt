@@ -7,17 +7,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import study.heltoe.movieapp.databinding.ActorCardBinding
-import study.heltoe.movieapp.models.movieInfo.Person
+import study.heltoe.movieapp.models.staffList.StaffResponse
 
 class ActorAdapter: RecyclerView.Adapter<ActorAdapter.ActorView>() {
     inner class ActorView(val binding: ActorCardBinding): RecyclerView.ViewHolder(binding.root)
 
-    private val diffCallBack = object : DiffUtil.ItemCallback<Person>() {
-        override fun areItemsTheSame(oldItem: Person, newItem: Person): Boolean {
-            return oldItem.id == newItem.id
+    private val diffCallBack = object : DiffUtil.ItemCallback<StaffResponse>() {
+        override fun areItemsTheSame(oldItem: StaffResponse, newItem: StaffResponse): Boolean {
+            return oldItem.staffId == newItem.staffId
         }
 
-        override fun areContentsTheSame(oldItem: Person, newItem: Person): Boolean {
+        override fun areContentsTheSame(oldItem: StaffResponse, newItem: StaffResponse): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
@@ -34,21 +34,19 @@ class ActorAdapter: RecyclerView.Adapter<ActorAdapter.ActorView>() {
     }
 
     override fun onBindViewHolder(holder: ActorView, position: Int) {
-        val actor = differ.currentList[position]
+        val staff = differ.currentList[position]
         holder.itemView.apply {
-            holder.binding.actorName.text = actor.name ?: actor.enName
-            actor.photo?.let {
-                Glide.with(this).load(it).into(holder.binding.actorImage)
-            }
+            holder.binding.actorName.text = staff.nameRu ?: staff.nameEn
+            staff.posterUrl.let { Glide.with(this).load(it).into(holder.binding.actorImage) }
             setOnClickListener {
-                onItemClickListener?.let { it(actor) }
+                onItemClickListener?.let { it(staff) }
             }
         }
     }
 
-    private var onItemClickListener: ((Person) -> Unit)? = null
+    private var onItemClickListener: ((StaffResponse) -> Unit)? = null
 
-    fun setOnItemClickListener (listener: (Person) -> Unit) {
+    fun setOnItemClickListener (listener: (StaffResponse) -> Unit) {
         onItemClickListener = listener
     }
 

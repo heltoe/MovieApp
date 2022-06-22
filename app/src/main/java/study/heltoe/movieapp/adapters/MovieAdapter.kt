@@ -7,17 +7,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import study.heltoe.movieapp.databinding.MovieItemBinding
-import study.heltoe.movieapp.models.movieList.Movie
+import study.heltoe.movieapp.models.movieList.FilmSearchByFiltersResponseItems
 
 class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieView>() {
     inner class MovieView(val binding: MovieItemBinding): RecyclerView.ViewHolder(binding.root)
 
-    private val diffCallBack = object : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
+    private val diffCallBack = object : DiffUtil.ItemCallback<FilmSearchByFiltersResponseItems>() {
+        override fun areItemsTheSame(oldItem: FilmSearchByFiltersResponseItems, newItem: FilmSearchByFiltersResponseItems): Boolean {
+            return oldItem.kinopoiskId == newItem.kinopoiskId
         }
 
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        override fun areContentsTheSame(oldItem: FilmSearchByFiltersResponseItems, newItem: FilmSearchByFiltersResponseItems): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
@@ -37,10 +37,8 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieView>() {
     override fun onBindViewHolder(holder: MovieView, position: Int) {
         val movie = differ.currentList[position]
         holder.itemView.apply {
-            movie.poster.previewUrl?.let {
-                Glide.with(this).load(movie.poster.url).into(holder.binding.cardImage)
-            }
-            val name = movie.name ?: movie.alternativeName
+            movie.posterUrlPreview.let { Glide.with(this).load(it).into(holder.binding.cardImage)}
+            val name = movie.nameRu ?: movie.nameOriginal ?: movie.nameEn
             name?.let {
                 holder.binding.cardText.text = name
             }
@@ -50,9 +48,9 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieView>() {
         }
     }
 
-    private var onItemClickListener: ((Movie) -> Unit)? = null
+    private var onItemClickListener: ((FilmSearchByFiltersResponseItems) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Movie) -> Unit) {
+    fun setOnItemClickListener(listener: (FilmSearchByFiltersResponseItems) -> Unit) {
         onItemClickListener = listener
     }
 

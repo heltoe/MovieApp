@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/movies_list"
+        android:id="@+id/moviesFragment"
         android:icon="@drawable/ic_film"
         android:title="@string/menu_item_movies_list" />
     <item
-        android:id="@+id/vish_list"
+        android:id="@+id/topMoviesListFragment"
         android:icon="@drawable/ic_heart"
-        android:title="@string/menu_item_vish_list" />
+        android:title="@string/menu_item_movies_top_list" />
 </menu>

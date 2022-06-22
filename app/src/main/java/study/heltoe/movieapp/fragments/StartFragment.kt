@@ -5,14 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import study.heltoe.movieapp.R
+import study.heltoe.movieapp.databinding.FragmentStartBinding
 
 class StartFragment : Fragment() {
+    private var _binding: FragmentStartBinding? = null
+    val mBinding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_start, container, false)
+        _binding = FragmentStartBinding.inflate(inflater, container, false)
+        return mBinding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

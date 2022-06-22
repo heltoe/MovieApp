@@ -2,6 +2,7 @@ package study.heltoe.movieapp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
@@ -9,9 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationBarView
 import study.heltoe.movieapp.MainActivity
 import study.heltoe.movieapp.R
 import study.heltoe.movieapp.adapters.MovieAdapter
@@ -40,21 +43,20 @@ class MoviesFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel = (activity as MainActivity).viewModel
+        initViewModel()
         setupRecyclerView()
+    }
 
-        movieAdapter.setOnItemClickListener {
-            viewModel.movieId = it.id
-            findNavController().navigate(R.id.action_moviesFragment_to_oneMovieFragment)
-        }
+    private fun initViewModel() {
+        viewModel = (activity as MainActivity).viewModel
 
         viewModel.listMovies.observe(viewLifecycleOwner, Observer { response ->
-            when(response) {
+            when (response) {
                 is StateData.Success -> {
                     hideLoader()
                     hideDefaultState()
                     response.data?.let { movieResponse ->
-                        movieAdapter.differ.submitList(movieResponse.docs.toList())
+                        movieAdapter.differ.submitList(movieResponse.items.toList())
                         if (viewModel.isLastPage) {
                             isLastPage = viewModel.isLastPage
                             mBinding.recyclerView.setPadding(10, 0, 0, 0)
@@ -83,6 +85,7 @@ class MoviesFragment : Fragment() {
         mBinding.loader.visibility = View.VISIBLE
         isLoading = true
     }
+
     private fun hideLoader() {
         mBinding.loader.visibility = View.INVISIBLE
         isLoading = false
@@ -92,14 +95,10 @@ class MoviesFragment : Fragment() {
         mBinding.defaultPlaceholder.visibility = View.VISIBLE
         isLoading = true
     }
+
     private fun hideDefaultState() {
         mBinding.defaultPlaceholder.visibility = View.INVISIBLE
         isLoading = false
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private val scrollHandler = object : RecyclerView.OnScrollListener() {
@@ -142,5 +141,15 @@ class MoviesFragment : Fragment() {
             layoutManager = gridLayoutManager
             addOnScrollListener(this@MoviesFragment.scrollHandler)
         }
+        movieAdapter.setOnItemClickListener {
+            viewModel.movieId = it.kinopoiskId
+            viewModel.parentFragment = R.id.moviesFragment
+            findNavController().navigate(R.id.action_moviesFragment_to_oneMovieFragment)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

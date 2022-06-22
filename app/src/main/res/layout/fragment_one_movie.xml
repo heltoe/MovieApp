@@ -62,15 +62,6 @@
         android:src="@drawable/left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/makeFavoriteBtn"
-        android:layout_width="60dp"
-        android:layout_height="80dp"
-        android:background="@drawable/background_opacity_btn"
-        android:src="@drawable/ic_star_passive"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
     <!--    -->
     <LinearLayout
         android:id="@+id/overlay_content_card"
@@ -95,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/movie_info_name"
-                android:textColor="@color/base_text_description"
+                android:textColor="@color/base_text_color"
                 android:textSize="@dimen/small_text_size" />
 
             <TextView
@@ -120,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/movie_info_rating"
-                android:textColor="@color/base_text_description"
+                android:textColor="@color/base_text_color"
                 android:textSize="@dimen/small_text_size" />
 
             <TextView
@@ -157,7 +148,6 @@
         android:id="@+id/main_content_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_margin_or_padding"
         android:orientation="vertical"
         android:paddingStart="@dimen/base_margin_or_padding"
         android:paddingEnd="@dimen/base_margin_or_padding"
@@ -169,11 +159,23 @@
             android:id="@+id/card_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/base_margin_or_padding"
             android:textColor="@color/base_text_color"
             android:textSize="@dimen/small_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             tools:text="Description" />
+
+        <TextView
+            android:id="@+id/card_staff_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/base_margin_or_padding"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/small_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            android:text="@string/card_staff_placeholder" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/actor_recycler_view"
@@ -181,7 +183,6 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/base_margin_or_padding"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintVertical_bias="0.0"
