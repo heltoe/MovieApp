@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/moviesFragment"
-        android:name="study.heltoe.movieapp.fragments.MoviesFragment"
+        android:name="study.heltoe.movieapp.fragments.movies.MoviesFragment"
         android:label="fragment_movies"
         tools:layout="@layout/fragment_movies" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/oneMovieFragment"
-        android:name="study.heltoe.movieapp.fragments.OneMovieFragment"
+        android:name="study.heltoe.movieapp.fragments.oneMovie.OneMovieFragment"
         android:label="fragment_one_movie"
         tools:layout="@layout/fragment_one_movie" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/actorFragment"
-        android:name="study.heltoe.movieapp.fragments.ActorFragment"
+        android:name="study.heltoe.movieapp.fragments.staff.StaffFragment"
         android:label="fragment_actor"
         tools:layout="@layout/fragment_actor" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/topMoviesListFragment"
-        android:name="study.heltoe.movieapp.fragments.TopMoviesListFragment"
+        android:name="study.heltoe.movieapp.fragments.topMovies.TopMoviesListFragment"
         android:label="fragment_vish_list"
         tools:layout="@layout/fragment_top_movies_list" >
         <action

@@ -3,19 +3,18 @@ package study.heltoe.movieapp
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import study.heltoe.movieapp.databinding.ActivityMainBinding
-import study.heltoe.movieapp.repository.MovieRepository
-import study.heltoe.movieapp.utils.MovieViewModelProviderFactory
-import study.heltoe.movieapp.viewmodels.MoviesViewModel
+import study.heltoe.movieapp.fragments.movies.MoviesFragmentViewModel
+import study.heltoe.movieapp.repository.NetworkRepository
+import study.heltoe.movieapp.utils.Constants.REPOSITORY
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val mBinding get() = _binding!!
-    lateinit var viewModel: MoviesViewModel
+    lateinit var viewModel: MoviesFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +25,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        val movieRepository = MovieRepository()
-        val viewModelProviderFactory = MovieViewModelProviderFactory(application, movieRepository)
-        viewModel =
-            ViewModelProvider(this, viewModelProviderFactory).get(MoviesViewModel::class.java)
+        REPOSITORY = NetworkRepository()
     }
 
     private fun initNavigation() {

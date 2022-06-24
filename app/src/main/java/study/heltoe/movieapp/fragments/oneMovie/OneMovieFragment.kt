@@ -1,4 +1,4 @@
-package study.heltoe.movieapp.fragments
+package study.heltoe.movieapp.fragments.oneMovie
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,22 +8,26 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import study.heltoe.movieapp.MainActivity
 import study.heltoe.movieapp.R
 import study.heltoe.movieapp.adapters.ActorAdapter
 import study.heltoe.movieapp.databinding.FragmentOneMovieBinding
+import study.heltoe.movieapp.utils.Constants.MOVIE_ID
+import study.heltoe.movieapp.utils.Constants.PARENT_FRAGMENT
+import study.heltoe.movieapp.utils.Constants.STAFF_NAME
 import study.heltoe.movieapp.utils.StateData
-import study.heltoe.movieapp.viewmodels.MoviesViewModel
 
 class OneMovieFragment : Fragment() {
     private var _binding: FragmentOneMovieBinding? = null
     private val mBinding get() = _binding!!
-    lateinit var viewModel: MoviesViewModel
+    lateinit var viewModel: OneMovieFragmentViewModel
     lateinit var actorAdapter: ActorAdapter
+    //
+    private var parentFragmentID: Int? = null
+    private var movieId: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +35,8 @@ class OneMovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentOneMovieBinding.inflate(inflater, container, false)
+        movieId = arguments?.getInt(MOVIE_ID)
+        parentFragmentID = arguments?.getInt(PARENT_FRAGMENT)
         return mBinding.root
     }
     override fun onStart() {
@@ -39,18 +45,13 @@ class OneMovieFragment : Fragment() {
         iitViewModel()
 
         mBinding.backBtn.setOnClickListener {
-            var idRoute = R.id.action_oneMovieFragment_to_moviesFragment
-            if (viewModel.parentFragment != R.id.moviesFragment) {
-                idRoute = R.id.action_oneMovieFragment_to_topMoviesListFragment
-            }
-            findNavController().navigate(idRoute)
+            leaveFromFragment()
         }
     }
 
     private fun iitViewModel() {
-        viewModel = (activity as MainActivity).viewModel
+        viewModel = ViewModelProvider(this)[OneMovieFragmentViewModel::class.java]
 
-        viewModel.getMovieInfo()
         viewModel.movieInfo.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is StateData.Success -> {
@@ -127,6 +128,13 @@ class OneMovieFragment : Fragment() {
                 }
             }
         })
+
+        if (movieId != null && movieId != -1) {
+            viewModel.movieId = movieId
+            viewModel.getMovieInfo()
+        } else {
+            leaveFromFragment()
+        }
     }
 
     private fun initRecycler() {
@@ -138,7 +146,11 @@ class OneMovieFragment : Fragment() {
         actorAdapter.setOnItemClickListener {
             val name = it.nameRu ?: it.nameEn ?: ""
             if (name.isNotEmpty()) {
-                findNavController().navigate(R.id.action_oneMovieFragment_to_actorFragment)
+                val bundle = Bundle()
+                bundle.putString(STAFF_NAME, name)
+                bundle.putInt(MOVIE_ID, movieId!!)
+                bundle.putInt(PARENT_FRAGMENT, parentFragmentID!!)
+                findNavController().navigate(R.id.action_oneMovieFragment_to_actorFragment, bundle)
             }
         }
     }
@@ -169,9 +181,17 @@ class OneMovieFragment : Fragment() {
         mBinding.defaultPlaceholder.visibility = View.INVISIBLE
     }
 
+    private fun leaveFromFragment () {
+        var idRoute = R.id.action_oneMovieFragment_to_moviesFragment
+        if (parentFragmentID != R.id.moviesFragment) {
+            idRoute = R.id.action_oneMovieFragment_to_topMoviesListFragment
+        }
+        findNavController().navigate(idRoute)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        viewModel.clearMovieInfo()
+        viewModel.clearData()
     }
 }

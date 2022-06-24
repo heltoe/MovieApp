@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/dark_blue_opacity_08"
     app:layoutDescription="@xml/fragment_one_movie_scene"
-    tools:context=".fragments.OneMovieFragment">
+    tools:context=".fragments.oneMovie.OneMovieFragment">
 
     <ProgressBar
         android:id="@+id/loader"
