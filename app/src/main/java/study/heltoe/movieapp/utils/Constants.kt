@@ -1,5 +1,6 @@
 package study.heltoe.movieapp.utils
 
+import android.app.Application
 import study.heltoe.movieapp.repository.MovieRepository
 
 
@@ -12,4 +13,5 @@ object Constants {
     const val STAFF_ID = "staffId"
     const val PARENT_FRAGMENT = "parentFragment"
     lateinit var REPOSITORY: MovieRepository
+    lateinit var APPLICATION: Application
 }

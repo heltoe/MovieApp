@@ -8,23 +8,23 @@ import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import study.heltoe.movieapp.MainActivity
 import study.heltoe.movieapp.R
 import study.heltoe.movieapp.adapters.MovieAdapter
 import study.heltoe.movieapp.databinding.FragmentMoviesBinding
-import study.heltoe.movieapp.models.movieList.FilmSearchByFiltersResponseItems
 import study.heltoe.movieapp.utils.Constants.MOVIE_ID
 import study.heltoe.movieapp.utils.Constants.PARENT_FRAGMENT
 import study.heltoe.movieapp.utils.Constants.TOTAL_QUERY_PAGE_SIZE
 import study.heltoe.movieapp.utils.StateData
+import study.heltoe.movieapp.viewmodels.GlobalViewModel
 
 class MoviesFragment : Fragment() {
     private var _binding: FragmentMoviesBinding? = null
     private val mBinding get() = _binding!!
-    private lateinit var viewModel: MoviesFragmentViewModel
+    private lateinit var viewModel: GlobalViewModel
     lateinit var movieAdapter: MovieAdapter
 
     var isLoading = false
@@ -46,7 +46,7 @@ class MoviesFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this)[MoviesFragmentViewModel::class.java]
+        viewModel = (activity as MainActivity).viewModel
 
         viewModel.listMovies.observe(viewLifecycleOwner, Observer { response ->
             when (response) {

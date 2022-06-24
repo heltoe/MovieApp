@@ -92,7 +92,8 @@ class StaffFragment : Fragment() {
                         isTextExist(deathPlace, mBinding.deathPlace, mBinding.containerDeathPlace)
                         //
                         if (personResponse.films.isEmpty()) {
-                            mBinding.mainContentCard.visibility = View.GONE
+                            mBinding.placeholderFilmsRecyclerView.visibility = View.GONE
+                            mBinding.filmsRecyclerView.visibility = View.GONE
                         } else {
                             movieAdapter.differ.submitList(personResponse.films.toList())
                         }

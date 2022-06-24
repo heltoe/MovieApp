@@ -24,7 +24,7 @@
             motion:dragDirection="dragUp"
             motion:maxAcceleration="20"
             motion:maxVelocity="20"
-            motion:touchAnchorId="@+id/main_content_card"
+            motion:touchAnchorId="@+id/overlay_content_card"
             motion:touchAnchorSide="top" />
     </Transition>
 
@@ -38,11 +38,12 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent" />
         <Constraint
-            android:id="@+id/overlay_content_card"
+            android:id="@+id/space"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/backBtn" />
+            motion:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
 </MotionScene>
