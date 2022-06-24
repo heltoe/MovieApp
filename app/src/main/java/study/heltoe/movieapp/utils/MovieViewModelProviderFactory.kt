@@ -1,9 +1,10 @@
-package study.heltoe.movieapp.viewmodels
+package study.heltoe.movieapp.utils
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import study.heltoe.movieapp.repository.MovieRepository
+import study.heltoe.movieapp.viewmodels.MoviesViewModel
 
 class MovieViewModelProviderFactory(
     private val app: Application,

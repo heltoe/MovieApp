@@ -9,9 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import study.heltoe.movieapp.MainActivity
 import study.heltoe.movieapp.R
+import study.heltoe.movieapp.adapters.ActorAdapter
 import study.heltoe.movieapp.databinding.FragmentOneMovieBinding
 import study.heltoe.movieapp.utils.StateData
 import study.heltoe.movieapp.viewmodels.MoviesViewModel
@@ -20,7 +23,7 @@ class OneMovieFragment : Fragment() {
     private var _binding: FragmentOneMovieBinding? = null
     private val mBinding get() = _binding!!
     lateinit var viewModel: MoviesViewModel
-    private var isFavorite = false
+    lateinit var actorAdapter: ActorAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +35,19 @@ class OneMovieFragment : Fragment() {
     }
     override fun onStart() {
         super.onStart()
+        initRecycler()
+        iitViewModel()
+
+        mBinding.backBtn.setOnClickListener {
+            var idRoute = R.id.action_oneMovieFragment_to_moviesFragment
+            if (viewModel.parentFragment != R.id.moviesFragment) {
+                idRoute = R.id.action_oneMovieFragment_to_topMoviesListFragment
+            }
+            findNavController().navigate(idRoute)
+        }
+    }
+
+    private fun iitViewModel() {
         viewModel = (activity as MainActivity).viewModel
 
         viewModel.getMovieInfo()
@@ -41,15 +57,15 @@ class OneMovieFragment : Fragment() {
                     hideLoader()
                     hideDefaultState()
                     response.data?.let { info ->
-                        val name = info.name ?: info.alternativeName ?: ""
+                        val name = info.nameRu ?: info.nameOriginal ?: info.nameEn ?: ""
                         val shortDescription = info.shortDescription ?: ""
                         val description = info.description ?: "Нет описания"
-                        val rating = info.rating.kp?.toString() ?: ""
+                        val rating = info.ratingKinopoisk?.toString() ?: ""
                         val year = info.year?.let { "$it г" } ?: ""
-                        val genre = info.genres.joinToString(", ", "", "", 3, "...") { "${it.name}" }
-                        val movieLength = info.movieLength?.let { "$it мин" } ?: ""
-                        val country = info.countries.joinToString(", ", "", "", 3, "...") { "${it.name}" }
-                        val ageRating = info.ageRating?.let { "$it+" } ?: ""
+                        val genre = info.genres.joinToString(", ", "", "", 3, "...") { it.genre }
+                        val movieLength = info.filmLength?.let { "$it мин" } ?: ""
+                        val country = info.countries.joinToString(", ", "", "", 3, "...") { it.country }
+                        val ageRating = info.ratingAgeLimits?.let { "$it+" } ?: ""
                         val stringTemplate = listOf(
                             isExistText(year),
                             isExistText(genre),
@@ -58,8 +74,8 @@ class OneMovieFragment : Fragment() {
                             isExistText(ageRating)
                         ).filterNot { it.isEmpty() }.joinToString(", ")
                         //
-                        Glide.with(this).load(info.poster.url).into(mBinding.cardImage)
-                        if (rating.isNotEmpty()) {
+                        Glide.with(this).load(info.posterUrl).into(mBinding.cardImage)
+                        if (name.isNotEmpty()) {
                             mBinding.name.text = name
                         } else {
                             mBinding.containerName.visibility = View.GONE
@@ -96,15 +112,33 @@ class OneMovieFragment : Fragment() {
                 }
             }
         })
-        mBinding.backBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_oneMovieFragment_to_moviesFragment)
+        viewModel.staffInfo.observe(viewLifecycleOwner, Observer { response ->
+            when(response) {
+                is StateData.Success -> {
+                    response.data?.let { responseStaff ->
+                        actorAdapter.differ.submitList(responseStaff.toList())
+                    }
+                }
+                is StateData.Error -> {}
+                is StateData.Loading -> {}
+                is StateData.Default -> {
+                    mBinding.actorRecyclerView.visibility = View.GONE
+                    mBinding.cardStaffPlaceholder.visibility = View.GONE
+                }
+            }
+        })
+    }
+
+    private fun initRecycler() {
+        actorAdapter = ActorAdapter()
+        mBinding.actorRecyclerView.apply {
+            adapter = actorAdapter
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
-        mBinding.makeFavoriteBtn.setOnClickListener {
-            isFavorite = !isFavorite
-            if (isFavorite) {
-                mBinding.makeFavoriteBtn.setImageResource(R.drawable.ic_star_active)
-            } else {
-                mBinding.makeFavoriteBtn.setImageResource(R.drawable.ic_star_passive)
+        actorAdapter.setOnItemClickListener {
+            val name = it.nameRu ?: it.nameEn ?: ""
+            if (name.isNotEmpty()) {
+                findNavController().navigate(R.id.action_oneMovieFragment_to_actorFragment)
             }
         }
     }

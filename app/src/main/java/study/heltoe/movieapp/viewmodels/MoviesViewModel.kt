@@ -12,8 +12,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import study.heltoe.movieapp.MovieApplication
-import study.heltoe.movieapp.models.movieInfo.MovieInfo
-import study.heltoe.movieapp.models.movieList.MovieListResponse
+import study.heltoe.movieapp.models.movieInfo.Film
+import study.heltoe.movieapp.models.movieList.FilmSearchByFiltersResponse
+import study.heltoe.movieapp.models.staffList.StaffResponse
 import study.heltoe.movieapp.repository.MovieRepository
 import study.heltoe.movieapp.utils.StateData
 import java.io.IOException
@@ -22,13 +23,15 @@ class MoviesViewModel(
     app: Application,
     private val repository: MovieRepository
 ): AndroidViewModel(app) {
-    val listMovies: MutableLiveData<StateData<MovieListResponse>> = MutableLiveData()
-    private var movieListResponse: MovieListResponse? = null
+    val listMovies: MutableLiveData<StateData<FilmSearchByFiltersResponse>> = MutableLiveData()
+    private var movieListResponse: FilmSearchByFiltersResponse? = null
     private var page = 1
     var isLastPage = false
     //
     var movieId: Int? = null
-    val movieInfo: MutableLiveData<StateData<MovieInfo>> = MutableLiveData()
+    var parentFragment: Int? = null
+    val movieInfo: MutableLiveData<StateData<Film>> = MutableLiveData()
+    val staffInfo: MutableLiveData<StateData<List<StaffResponse>>> = MutableLiveData()
 
     init {
         getListMovies()
@@ -44,22 +47,22 @@ class MoviesViewModel(
         }
     }
 
-    private fun handleMoviesResponse(response: Response<MovieListResponse>): StateData<MovieListResponse> {
+    private fun handleMoviesResponse(response: Response<FilmSearchByFiltersResponse>): StateData<FilmSearchByFiltersResponse> {
         if (response.isSuccessful) {
             response.body()?.let { result ->
-                if (page == result.pages) {
+                if (page == result.totalPages) {
                     isLastPage = true
                 }
                 page++
                 if (movieListResponse == null) {
                     movieListResponse = result
                 } else {
-                    val oldList = movieListResponse?.docs
-                    val newList = result.docs
+                    val oldList = movieListResponse?.items
+                    val newList = result.items
                     oldList?.addAll(newList)
                 }
                 val finalResult = movieListResponse ?: result
-                if (finalResult.docs.isEmpty()) {
+                if (finalResult.items.isEmpty()) {
                     return StateData.Default(finalResult)
                 }
                 return StateData.Success(finalResult)
@@ -69,8 +72,8 @@ class MoviesViewModel(
     }
 
     private suspend fun fetchListMovies () {
-        listMovies.postValue(StateData.Loading())
         try {
+            listMovies.postValue(StateData.Loading())
             if (hasInternetConnection()) {
                 val response = repository.getMovieList(page)
                 listMovies.postValue(handleMoviesResponse(response))
@@ -86,13 +89,14 @@ class MoviesViewModel(
     }
 
     private suspend fun fetchMovieInfo() {
-        movieInfo.postValue(StateData.Loading())
         try {
+            movieInfo.postValue(StateData.Loading())
             if (hasInternetConnection()) {
                 val response = repository.getMovieInfo(movieId!!)
                 if (response.isSuccessful) {
                     response.body()?.let { result ->
                         movieInfo.postValue(StateData.Success(result))
+                        fetchListStuff(result.kinopoiskId)
                     }
                 }
             } else {
@@ -102,6 +106,31 @@ class MoviesViewModel(
             when(t) {
                 is IOException -> movieInfo.postValue(StateData.Error("Ошибка интернет соединения"))
                 else -> movieInfo.postValue(StateData.Error("Ошибка загрузки ${t.message}"))
+            }
+        }
+    }
+
+    private suspend fun fetchListStuff(id: Int) {
+        try {
+            staffInfo.postValue(StateData.Loading())
+            if (hasInternetConnection()) {
+                val response = repository.getMovieInfoStaff(id)
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        if (it.isEmpty()) {
+                            staffInfo.postValue(StateData.Default(it))
+                        } else {
+                            staffInfo.postValue(StateData.Success(it))
+                        }
+                    }
+                }
+            } else {
+                staffInfo.postValue(StateData.Error("Нет интернет соединения"))
+            }
+        } catch (t: Throwable) {
+            when(t) {
+                is IOException -> staffInfo.postValue(StateData.Error("Ошибка интернет соединения"))
+                else -> staffInfo.postValue(StateData.Error("Ошибка загрузки ${t.message}"))
             }
         }
     }

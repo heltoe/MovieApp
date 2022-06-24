@@ -3,10 +3,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_item_movies_list">Фильмы</string>
-    <string name="menu_item_vish_list">Избранное</string>
+    <string name="menu_item_movies_top_list">ТОП 250</string>
     <string name="empty_placeholder">Список фильмов пуст</string>
     <string name="default_state_movie_info">Нет данных</string>
     <string name="movie_info_rating">Рейтинг:</string>
     <string name="movie_info_name">Название:</string>
     <string name="movie_info_description">Описание:</string>
+    <!--  person  -->
+    <string name="person_info_gender">Пол:</string>
+    <string name="person_info_link">Ссылка:</string>
+    <string name="card_staff_placeholder">В главных ролях:</string>
 </resources>
