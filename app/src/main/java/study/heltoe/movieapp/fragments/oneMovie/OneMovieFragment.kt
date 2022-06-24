@@ -17,7 +17,7 @@ import study.heltoe.movieapp.adapters.ActorAdapter
 import study.heltoe.movieapp.databinding.FragmentOneMovieBinding
 import study.heltoe.movieapp.utils.Constants.MOVIE_ID
 import study.heltoe.movieapp.utils.Constants.PARENT_FRAGMENT
-import study.heltoe.movieapp.utils.Constants.STAFF_NAME
+import study.heltoe.movieapp.utils.Constants.STAFF_ID
 import study.heltoe.movieapp.utils.StateData
 
 class OneMovieFragment : Fragment() {
@@ -25,6 +25,7 @@ class OneMovieFragment : Fragment() {
     private val mBinding get() = _binding!!
     lateinit var viewModel: OneMovieFragmentViewModel
     lateinit var actorAdapter: ActorAdapter
+
     //
     private var parentFragmentID: Int? = null
     private var movieId: Int? = null
@@ -39,6 +40,7 @@ class OneMovieFragment : Fragment() {
         parentFragmentID = arguments?.getInt(PARENT_FRAGMENT)
         return mBinding.root
     }
+
     override fun onStart() {
         super.onStart()
         initRecycler()
@@ -53,7 +55,7 @@ class OneMovieFragment : Fragment() {
         viewModel = ViewModelProvider(this)[OneMovieFragmentViewModel::class.java]
 
         viewModel.movieInfo.observe(viewLifecycleOwner, Observer { response ->
-            when(response) {
+            when (response) {
                 is StateData.Success -> {
                     hideLoader()
                     hideDefaultState()
@@ -65,8 +67,9 @@ class OneMovieFragment : Fragment() {
                         val year = info.year?.let { "$it г" } ?: ""
                         val genre = info.genres.joinToString(", ", "", "", 3, "...") { it.genre }
                         val movieLength = info.filmLength?.let { "$it мин" } ?: ""
-                        val country = info.countries.joinToString(", ", "", "", 3, "...") { it.country }
-                        val ageRating = info.ratingAgeLimits?.let { "$it+" } ?: ""
+                        val country =
+                            info.countries.joinToString(", ", "", "", 3, "...") { it.country }
+                        val ageRating = info.ratingAgeLimits?.let { "${it.drop(3)}+" } ?: ""
                         val stringTemplate = listOf(
                             isExistText(year),
                             isExistText(genre),
@@ -77,9 +80,7 @@ class OneMovieFragment : Fragment() {
                         //
                         Glide.with(this).load(info.posterUrl).into(mBinding.cardImage)
                         if (name.isNotEmpty()) {
-                            mBinding.name.text = name
-                        } else {
-                            mBinding.containerName.visibility = View.GONE
+                            mBinding.name.text = "${resources.getString(R.string.movie_info_name)} $name"
                         }
                         if (rating.isNotEmpty()) {
                             mBinding.rating.text = rating
@@ -114,7 +115,7 @@ class OneMovieFragment : Fragment() {
             }
         })
         viewModel.staffInfo.observe(viewLifecycleOwner, Observer { response ->
-            when(response) {
+            when (response) {
                 is StateData.Success -> {
                     response.data?.let { responseStaff ->
                         actorAdapter.differ.submitList(responseStaff.toList())
@@ -141,17 +142,15 @@ class OneMovieFragment : Fragment() {
         actorAdapter = ActorAdapter()
         mBinding.actorRecyclerView.apply {
             adapter = actorAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
         actorAdapter.setOnItemClickListener {
-            val name = it.nameRu ?: it.nameEn ?: ""
-            if (name.isNotEmpty()) {
-                val bundle = Bundle()
-                bundle.putString(STAFF_NAME, name)
-                bundle.putInt(MOVIE_ID, movieId!!)
-                bundle.putInt(PARENT_FRAGMENT, parentFragmentID!!)
-                findNavController().navigate(R.id.action_oneMovieFragment_to_actorFragment, bundle)
-            }
+            val bundle = Bundle()
+            bundle.putInt(STAFF_ID, it.staffId)
+            bundle.putInt(MOVIE_ID, movieId!!)
+            bundle.putInt(PARENT_FRAGMENT, parentFragmentID!!)
+            findNavController().navigate(R.id.action_oneMovieFragment_to_actorFragment, bundle)
         }
     }
 
@@ -170,6 +169,7 @@ class OneMovieFragment : Fragment() {
     private fun showLoader() {
         mBinding.loader.visibility = View.VISIBLE
     }
+
     private fun hideLoader() {
         mBinding.loader.visibility = View.INVISIBLE
     }
@@ -177,11 +177,12 @@ class OneMovieFragment : Fragment() {
     private fun showDefaultState() {
         mBinding.defaultPlaceholder.visibility = View.VISIBLE
     }
+
     private fun hideDefaultState() {
         mBinding.defaultPlaceholder.visibility = View.INVISIBLE
     }
 
-    private fun leaveFromFragment () {
+    private fun leaveFromFragment() {
         var idRoute = R.id.action_oneMovieFragment_to_moviesFragment
         if (parentFragmentID != R.id.moviesFragment) {
             idRoute = R.id.action_oneMovieFragment_to_topMoviesListFragment

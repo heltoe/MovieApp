@@ -8,7 +8,7 @@ import study.heltoe.movieapp.models.staffList.StaffResponse
 import study.heltoe.movieapp.models.movieInfo.Film
 import study.heltoe.movieapp.models.movieList.FilmSearchByFiltersResponse
 import study.heltoe.movieapp.models.movieTop.FilmTopResponse
-import study.heltoe.movieapp.models.personsList.PersonByNameResponse
+import study.heltoe.movieapp.models.staffInfo.PersonResponse
 
 interface MovieApi {
     @GET("v2.2/films")
@@ -31,9 +31,8 @@ interface MovieApi {
     suspend fun getMovieInfoStaff(
         @Query("filmId") field: String = "",
     ): Response<List<StaffResponse>>
-    @GET("v1/persons")
+    @GET("v1/staff/{id}")
     suspend fun getPersonInfo(
-        @Query("name") name: String = "",
-        @Query("page") page: String = "1",
-    ): Response<PersonByNameResponse>
+        @Path("id") id: String = "",
+    ): Response<PersonResponse>
 }

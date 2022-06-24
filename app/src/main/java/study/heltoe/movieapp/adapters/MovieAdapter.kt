@@ -39,12 +39,8 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieView>() {
         holder.itemView.apply {
             movie.posterUrlPreview.let { Glide.with(this).load(it).into(holder.binding.cardImage)}
             val name = movie.nameRu ?: movie.nameOriginal ?: movie.nameEn
-            name?.let {
-                holder.binding.cardText.text = name
-            }
-            setOnClickListener {
-                onItemClickListener?.let { it(movie) }
-            }
+            name?.let { holder.binding.cardText.text = name }
+            setOnClickListener { onItemClickListener?.let { it(movie) } }
         }
     }
 

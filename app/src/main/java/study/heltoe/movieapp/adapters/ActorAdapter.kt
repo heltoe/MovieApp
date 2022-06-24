@@ -36,11 +36,10 @@ class ActorAdapter: RecyclerView.Adapter<ActorAdapter.ActorView>() {
     override fun onBindViewHolder(holder: ActorView, position: Int) {
         val staff = differ.currentList[position]
         holder.itemView.apply {
-            holder.binding.actorName.text = staff.nameRu ?: staff.nameEn
+            val name = staff.nameRu ?: staff.nameEn
+            name?.let { holder.binding.actorName.text = it }
             staff.posterUrl.let { Glide.with(this).load(it).into(holder.binding.actorImage) }
-            setOnClickListener {
-                onItemClickListener?.let { it(staff) }
-            }
+            setOnClickListener { onItemClickListener?.let { it(staff) } }
         }
     }
 

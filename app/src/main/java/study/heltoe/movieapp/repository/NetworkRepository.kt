@@ -11,5 +11,5 @@ class NetworkRepository: MovieRepository {
 
     override suspend fun getMovieInfoStaff(id: Int) = RetrofitClient.api.getMovieInfoStaff(id.toString())
 
-    override suspend fun getPersonInfo(name: String) = RetrofitClient.api.getPersonInfo(name)
+    override suspend fun getPersonInfo(id: String) = RetrofitClient.api.getPersonInfo(id)
 }

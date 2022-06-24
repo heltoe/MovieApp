@@ -1,8 +1,9 @@
 package study.heltoe.movieapp.models.movieInfo
 
+import study.heltoe.movieapp.models.enums.ProductionStatusEnum
 import study.heltoe.movieapp.models.movieList.Country
 import study.heltoe.movieapp.models.movieList.Genre
-import study.heltoe.movieapp.models.movieList.TypeEnum
+import study.heltoe.movieapp.models.enums.TypeEnum
 
 data class Film(
     val kinopoiskId: Int,

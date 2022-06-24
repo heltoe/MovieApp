@@ -47,9 +47,7 @@ class TopMoviesAdapter : RecyclerView.Adapter<TopMoviesAdapter.MovieView>() {
             }
             val name = movie.nameRu ?: movie.nameEn
             name?.let { holder.binding.cardText.text = name }
-            setOnClickListener {
-                onItemClickListener?.let { it(movie) }
-            }
+            setOnClickListener { onItemClickListener?.let { it(movie) } }
         }
     }
 

@@ -4,7 +4,7 @@ import retrofit2.Response
 import study.heltoe.movieapp.models.movieInfo.Film
 import study.heltoe.movieapp.models.movieList.FilmSearchByFiltersResponse
 import study.heltoe.movieapp.models.movieTop.FilmTopResponse
-import study.heltoe.movieapp.models.personsList.PersonByNameResponse
+import study.heltoe.movieapp.models.staffInfo.PersonResponse
 import study.heltoe.movieapp.models.staffList.StaffResponse
 
 interface MovieRepository {
@@ -13,5 +13,5 @@ interface MovieRepository {
     suspend fun getMovieInfo(id: Int): Response<Film>
     //
     suspend fun getMovieInfoStaff(id: Int): Response<List<StaffResponse>>
-    suspend fun getPersonInfo(name: String): Response<PersonByNameResponse>
+    suspend fun getPersonInfo(id: String): Response<PersonResponse>
 }

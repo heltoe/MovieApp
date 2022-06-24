@@ -3,16 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/android/MovieApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/android/MovieApp/app/src/main/res/layout/actor_card.xml" value="0.176" />
-        <entry key="..\:/android/MovieApp/app/src/main/res/layout/fragment_actor.xml" value="0.12360688956433637" />
-        <entry key="..\:/android/MovieApp/app/src/main/res/layout/fragment_movies.xml" value="0.1" />
-        <entry key="..\:/android/MovieApp/app/src/main/res/layout/fragment_one_movie.xml" value="0.264" />
-        <entry key="..\:/android/MovieApp/app/src/main/res/layout/fragment_start.xml" value="0.25416666666666665" />
-        <entry key="..\:/android/MovieApp/app/src/main/res/layout/fragment_top_movies_list.xml" value="0.25416666666666665" />
-        <entry key="..\:/android/MovieApp/app/src/main/res/layout/fragment_vish_list.xml" value="0.25416666666666665" />
-        <entry key="..\:/android/MovieApp/app/src/main/res/layout/movie_item.xml" value="0.25416666666666665" />
-        <entry key="..\:/android/MovieApp/app/src/main/res/menu/menu.xml" value="0.25416666666666665" />
         <entry key="..\:/java/MovieApp/app/src/main/res/drawable/background_opacity_btn.xml" value="0.1835" />
         <entry key="..\:/java/MovieApp/app/src/main/res/drawable/grey_overlay.xml" value="0.1835" />
         <entry key="..\:/java/MovieApp/app/src/main/res/drawable/ic_film.xml" value="0.1265" />
@@ -23,13 +13,15 @@
         <entry key="..\:/java/MovieApp/app/src/main/res/drawable/ic_star_solid.xml" value="0.1845" />
         <entry key="..\:/java/MovieApp/app/src/main/res/drawable/left.xml" value="0.1845" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
-        <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_actor.xml" value="0.25416666666666665" />
+        <entry key="..\:/java/MovieApp/app/src/main/res/layout/actor_card.xml" value="0.11851851851851852" />
+        <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_actor.xml" value="0.2" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_auth.xml" value="0.25416666666666665" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_movies.xml" value="0.24010416666666667" />
-        <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_one_movie.xml" value="0.1" />
+        <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_one_movie.xml" value="0.264" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_start.xml" value="0.25416666666666665" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/fragment_vish_list.xml" value="0.24010416666666667" />
         <entry key="..\:/java/MovieApp/app/src/main/res/layout/movie_item.xml" value="0.16799999999999998" />
+        <entry key="..\:/java/MovieApp/app/src/main/res/layout/staff_profuct.xml" value="0.24728260869565216" />
         <entry key="..\:/java/MovieApp/app/src/main/res/menu/menu.xml" value="0.25416666666666665" />
       </map>
     </option>
