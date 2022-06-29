@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_movies" >
         <action
             android:id="@+id/action_moviesFragment_to_oneMovieFragment"
-            app:destination="@id/oneMovieFragment" />
+            app:destination="@id/oneMovieFragment"
+            app:enterAnim="@anim/custom_from_right"
+            app:exitAnim="@anim/custom_to_left"
+            app:popEnterAnim="@anim/custom_from_left"
+            app:popExitAnim="@anim/custom_to_right" />
     </fragment>
     <fragment
         android:id="@+id/oneMovieFragment"
@@ -21,13 +25,21 @@
         tools:layout="@layout/fragment_one_movie" >
         <action
             android:id="@+id/action_oneMovieFragment_to_moviesFragment"
-            app:destination="@id/moviesFragment" />
+            app:destination="@id/moviesFragment"
+            app:enterAnim="@anim/custom_from_left"
+            app:exitAnim="@anim/custom_to_right" />
         <action
             android:id="@+id/action_oneMovieFragment_to_actorFragment"
-            app:destination="@id/actorFragment" />
+            app:destination="@id/actorFragment"
+            app:enterAnim="@anim/custom_from_right"
+            app:exitAnim="@anim/custom_to_left"
+            app:popEnterAnim="@anim/custom_from_left"
+            app:popExitAnim="@anim/custom_to_right" />
         <action
             android:id="@+id/action_oneMovieFragment_to_topMoviesListFragment"
-            app:destination="@id/topMoviesListFragment" />
+            app:destination="@id/topMoviesListFragment"
+            app:enterAnim="@anim/custom_from_left"
+            app:exitAnim="@anim/custom_to_right" />
     </fragment>
     <fragment
         android:id="@+id/actorFragment"
@@ -36,7 +48,9 @@
         tools:layout="@layout/fragment_actor" >
         <action
             android:id="@+id/action_actorFragment_to_oneMovieFragment"
-            app:destination="@id/oneMovieFragment" />
+            app:destination="@id/oneMovieFragment"
+            app:enterAnim="@anim/custom_from_left"
+            app:exitAnim="@anim/custom_to_right" />
     </fragment>
     <fragment
         android:id="@+id/topMoviesListFragment"
@@ -45,6 +59,10 @@
         tools:layout="@layout/fragment_top_movies_list" >
         <action
             android:id="@+id/action_topMoviesListFragment_to_oneMovieFragment"
-            app:destination="@id/oneMovieFragment" />
+            app:destination="@id/oneMovieFragment"
+            app:enterAnim="@anim/custom_from_right"
+            app:exitAnim="@anim/custom_to_left"
+            app:popEnterAnim="@anim/custom_from_left"
+            app:popExitAnim="@anim/custom_to_right" />
     </fragment>
 </navigation>

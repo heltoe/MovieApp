@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -42,6 +43,13 @@ class StaffFragment : Fragment() {
         movieId = arguments?.getInt(MOVIE_ID)
         parentFragment = arguments?.getInt(PARENT_FRAGMENT)
         staffId = arguments?.getInt(STAFF_ID)
+
+        val callbackBack = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                leaveFromFragment()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callbackBack)
         return mBinding.root
     }
 

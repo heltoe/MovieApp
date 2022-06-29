@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -38,6 +39,14 @@ class OneMovieFragment : Fragment() {
         _binding = FragmentOneMovieBinding.inflate(inflater, container, false)
         movieId = arguments?.getInt(MOVIE_ID)
         parentFragmentID = arguments?.getInt(PARENT_FRAGMENT)
+
+        val callbackBack = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                leaveFromFragment()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callbackBack)
+
         return mBinding.root
     }
 
